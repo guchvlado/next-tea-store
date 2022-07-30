@@ -1,21 +1,47 @@
-import { useState } from "react"
-import { SortPropertyEnum } from "../../types/EnumSortProperty"
+import { useEffect, useRef, useState } from "react"
+import { useAppDispatch } from "../../hooks/useAppDispatch"
+import { useAppSelector } from "../../hooks/useAppSelector"
+import { setActiveSort } from "../../redux/reducers/filterSlice"
+import { ISortItem } from "../../types/ISortItem"
 
-const sortList = [
-    {name: 'Популярности DESC', sortProperty: SortPropertyEnum.RATING_DESC},
-    {name: 'Популярности ASC', sortProperty: SortPropertyEnum.RATING_ASC},
-    {name: 'Цене DESC', sortProperty: SortPropertyEnum.PRICE_DESC},
-    {name: 'Цене ASC', sortProperty: SortPropertyEnum.PRICE_ASC},
-    {name: 'Алфавиту DESC', sortProperty: SortPropertyEnum.TITLE_DESC},
-    {name: 'Алфавиту ASC', sortProperty: SortPropertyEnum.TITLE_ASC}
+const sortList: ISortItem[] = [
+    {name: 'Сначала популярный', sortBy: 'rating', order: 'desc'},
+    {name: 'Сначала дорогой', sortBy: 'price', order: 'desc'},
+    {name: 'Сначала недорогой', sortBy: 'price', order: 'inc'},
+    {name: 'По наименованию a-z', sortBy: 'title', order: 'desc'},
+    {name: 'По наименованию z-a', sortBy: 'title', order: 'inc'}
 ]
 
 const Sort = () => {
 
+    const dispatch = useAppDispatch()
+
     const [isOpen, setIsOpen] = useState(false)
+    const {activeSort} = useAppSelector(state => state.filter)
+
+    const sortRef = useRef<HTMLDivElement>(null)
+
+
+    const onChangeSort = (item: ISortItem) => {
+        dispatch(setActiveSort(item))
+        setIsOpen(false)
+    }
+
+    useEffect(() => {
+        const handleClickOutside = (e: MouseEvent) => {
+            const _e = e as MouseEvent & {path: Node[]}
+            if (sortRef.current && !_e.path.includes(sortRef.current)) {
+                setIsOpen(false)
+            }
+        }
+
+        document.body.addEventListener('click', handleClickOutside)
+
+        return () => document.body.removeEventListener('click', handleClickOutside)
+    }, [])
 
     return (
-        <div className="relative">
+        <div ref={sortRef} className="relative">
             <div className="flex items-center gap-2">
                 <svg
                     width="10"
@@ -31,15 +57,15 @@ const Sort = () => {
                     />
                 </svg>
                 <b>Сортировка по:</b>
-                <span className="text-maingreen border-dashed border-b border-maingreen cursor-pointer" onClick={() => setIsOpen(isOpen => !isOpen)}>popular</span>
+                <span className="text-maingreen border-dashed border-b border-maingreen cursor-pointer" onClick={() => setIsOpen(isOpen => !isOpen)}>{activeSort.name}</span>
             </div>
             {isOpen && <div className="absolute right-0 mt-4 bg-white shadow-md rounded-lg w-[160px] z-10">
                 <ul>
                     {sortList.map((item, index) =>
                         <li
                             key={index}
-                            onClick={() => console.log(1)}
-                            className={`cursor-pointer px-4 py-4 hover:bg-lightgreen ${index === 0 ? 'text-maingreen bg-lightgreen font-bold' : ''}`}
+                            onClick={() => onChangeSort(item)}
+                            className={`cursor-pointer px-4 py-4 hover:bg-lightgreen ${activeSort.name === item.name ? 'text-maingreen bg-lightgreen font-bold' : ''}`}
                         >{sortList[index].name}</li>)}
                 </ul>
             </div>}

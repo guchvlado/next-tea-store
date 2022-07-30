@@ -13,16 +13,16 @@ const Home: NextPage = () => {
 
   const dispatch = useAppDispatch()
   const {items, status} = useAppSelector(state => state.tea)
-  const {activeCategory, activeOrder, activeSearch, activeSortBy} = useAppSelector(state => state.filter)
+  const {activeCategory, activeSearch, activeSort: {order, sortBy}} = useAppSelector(state => state.filter)
 
   useEffect(() => {
     dispatch(fetchTea({
       category: activeCategory,
-      order: activeOrder,
       search: activeSearch,
-      sortBy: activeSortBy
+      order,
+      sortBy,
     }))
-  }, [activeCategory, activeOrder, activeSearch, activeSortBy])
+  }, [activeCategory, activeSearch, order, sortBy])
 
   return (
     <div className='mycontainer py-[43px]'>

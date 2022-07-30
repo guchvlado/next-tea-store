@@ -1,11 +1,30 @@
 import Image from "next/image"
 import Link from "next/link"
 import { useState } from "react"
+import { useAppDispatch } from "../../hooks/useAppDispatch"
+import { useAppSelector } from "../../hooks/useAppSelector"
+import { addCartItem } from "../../redux/reducers/cartSlice"
 import { ITeaItem } from "../../types/ITeaItem"
 
-const TeaItem = ({ id, imageUrl, price, title }: ITeaItem) => {
+const TeaItem = ({ id, imageUrl, price, title, category, rating }: ITeaItem) => {
+
+    const dispatch = useAppDispatch()
 
     const [weight, setWeight] = useState(100)
+
+    const itemInCart = useAppSelector(state => state.cart.items.find(item => item.id === id))
+
+    const onAddItem = () => {
+        dispatch(addCartItem({
+            id,
+            title,
+            category,
+            imageUrl,
+            price,
+            rating,
+            quantity: weight,
+        }))
+    }
 
     return (
         <div className="w-full hover:scale-105 transition-transform">
@@ -34,13 +53,15 @@ const TeaItem = ({ id, imageUrl, price, title }: ITeaItem) => {
                 </select>
                 <div className="flex flex-1 justify-center font-bold">{price * weight / 100} руб</div>
             </div>
-            <div className="button_item duration-300 group">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path className="group-hover:stroke-white duration-300" d="M10 7V10V7ZM10 10V13V10ZM10 10H13H10ZM10 10H7H10ZM19 10C19 11.1819 18.7672 12.3522 18.3149 13.4442C17.8626 14.5361 17.1997 15.5282 16.364 16.364C15.5282 17.1997 14.5361 17.8626 13.4442 18.3149C12.3522 18.7672 11.1819 19 10 19C8.8181 19 7.64778 18.7672 6.55585 18.3149C5.46392 17.8626 4.47177 17.1997 3.63604 16.364C2.80031 15.5282 2.13738 14.5361 1.68508 13.4442C1.23279 12.3522 1 11.1819 1 10C1 7.61305 1.94821 5.32387 3.63604 3.63604C5.32387 1.94821 7.61305 1 10 1C12.3869 1 14.6761 1.94821 16.364 3.63604C18.0518 5.32387 19 7.61305 19 10Z" stroke="#2EAA76" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
+            <div className="button_item duration-300 group justify-center gap-4" onClick={onAddItem}>
 
                 Добавить
-                <div className="rounded-full bg-maingreen text-white w-6 h-6 flex items-center justify-center text-sm group-hover:bg-white group-hover:text-maingreen duration-300">2</div>
+                {itemInCart ? 
+                <div 
+                className="bg-maingreen rounded-xl h-6 px-2 text-xs flex justify-center items-center text-white justify-self-end"
+                >В корзине {itemInCart.quantity} г</div> 
+                : ''}
+                
             </div>
         </div>
     )

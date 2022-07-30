@@ -49,4 +49,7 @@
     .button_item {
       @apply flex justify-between items-center border border-maingreen rounded-lg px-6 py-3 mt-2 cursor-pointer hover:bg-maingreen hover:text-white active:bg-green-700 active:translate-y-1 ;
     }
+    .button_cartItem {
+      @apply border-2 border-maingreen p-3 rounded-full hover:bg-maingreen child:child:hover:fill-white cursor-pointer duration-300;
+    }
 }

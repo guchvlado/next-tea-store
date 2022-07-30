@@ -1,10 +1,14 @@
 import Link from "next/link"
+import { useEffect, useRef } from "react"
+import { useAppSelector } from "../../hooks/useAppSelector"
+import { countCartOrder } from "../../utils/countCartOrder"
 
 
 const CartButton = () => {
 
-    const totalPrice = 123
-    const totalQuantity = 123
+    const items = useAppSelector(state => state.cart.items)
+
+    const {totalPrice} = countCartOrder(items)
 
     return (
             <Link href='/cart'>
@@ -41,7 +45,7 @@ const CartButton = () => {
                             strokeLinejoin="round"
                         />
                     </svg>
-                    <span>{totalQuantity}</span>
+                    <span>{items.length}</span>
                 </a>
             </Link>
     )

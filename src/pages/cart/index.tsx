@@ -5,19 +5,29 @@ import { useEffect } from 'react'
 import CartEmpty from '../../components/CartEmpty'
 import CartItem from '../../components/CartItem'
 import { useAppDispatch } from '../../hooks/useAppDispatch'
+import { useAppSelector } from '../../hooks/useAppSelector'
+import { clearCart } from '../../redux/reducers/cartSlice'
+import { countCartOrder } from '../../utils/countCartOrder'
 
 const Cart: NextPage = () => {
 
   const dispatch = useAppDispatch()
 
-  const onClearCart = () => {
+  const items = useAppSelector(state => state.cart.items)
 
+  const {totalPrice, totalWeight} = countCartOrder(items)
+
+  const onClearCart = () => {
+    if (window.confirm('Вы уверены, что хотите очистить корзину?')) {
+      dispatch(clearCart())
+    }
   }
 
   
   return (
-    <div className='mycontainer'>
-
+    <>
+      {items.length > 0 ? 
+      <div className='mycontainer'>
       <div className="w-[820px] mx-auto py-24">
         <div className="flex justify-between items-center">
           <h2 className="flex items-center text-3xl gap-3">
@@ -85,13 +95,13 @@ const Cart: NextPage = () => {
           </div>
         </div>
         <div className="flex flex-col gap-8">
-          {/* {items.map(item => <CartItem key={item.id} {...item} />)} */}
-          <CartItem id='1' price={100} title='some tea' category={2} rating={10} key='1' imageUrl='https://moychay.ru/system/product_ng_fotos/8567/medium/d43f93403e20616dd1844d189670e2cc4713a568/moychay_42294.jpg?1637249762' />
+          {items.map(item => <CartItem key={item.id} {...item} />)}
+          
         </div>
         <div className="my-12">
           <div className="flex justify-between text-2xl">
-            <span> Всего чая: <b>123 г.</b> </span>
-            <span> Сумма заказа: <b className='text-maingreen'>123 ₽</b> </span>
+            <span> Всего чая: <b>{totalWeight} г.</b> </span>
+            <span> Сумма заказа: <b className='text-maingreen'>{totalPrice} ₽</b> </span>
           </div>
           <div className="flex justify-between mt-12">
             <Link href="/">
@@ -118,11 +128,11 @@ const Cart: NextPage = () => {
           </div>
         </div>
       </div>
-
-
-      {/* <CartEmpty/> */}
-
     </div>
+    :
+    <CartEmpty/>
+    }
+    </>
   )
 }
 

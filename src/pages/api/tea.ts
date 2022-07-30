@@ -34,7 +34,7 @@ export default function handler(
                 break;
         }
     }
-    if (order && order === 'desc') {
+    if (order && order === 'inc') {
         filteredData.reverse()
     }
     res.status(200).json(filteredData)

@@ -6,3 +6,7 @@ export interface ITeaItem {
     price: number;
     rating: number;
 }
+
+export interface ICartItem extends ITeaItem {
+    quantity: number;
+}
