@@ -1,9 +1,20 @@
-import React, { useState } from "react";
-
+import React, { useEffect, useRef, useState } from "react";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { useDebounce } from "../../hooks/useDebounce";
+import { setActiveSearch } from "../../redux/reducers/filterSlice";
 
 const Search = () => {
 
+    const dispatch = useAppDispatch()
+
     const [text, setText] = useState('')
+    const debouncedText = useDebounce(text, 150)
+
+    const inputRef = useRef<HTMLInputElement>(null)
+
+    useEffect(() => {
+        dispatch(setActiveSearch(debouncedText))
+    }, [debouncedText])
 
     const onChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
         setText(e.target.value)
@@ -11,6 +22,7 @@ const Search = () => {
 
     const onClear = () => {
         setText('')
+        inputRef.current?.focus()
     }
 
     return (
@@ -49,6 +61,7 @@ const Search = () => {
                 />
             </svg>
             <input 
+            ref={inputRef}
             type="text" 
             placeholder='Поиск чая...' 
             value={text} 

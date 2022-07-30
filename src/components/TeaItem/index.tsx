@@ -1,10 +1,14 @@
 import Image from "next/image"
 import Link from "next/link"
+import { useState } from "react"
 import { ITeaItem } from "../../types/ITeaItem"
 
 const TeaItem = ({ id, imageUrl, price, title }: ITeaItem) => {
+
+    const [weight, setWeight] = useState(100)
+
     return (
-        <div className="w-[260px] hover:scale-105 transition-transform">
+        <div className="w-full hover:scale-105 transition-transform">
             <Link href={`/tea/${id}`}>
                 <a>
                     <Image
@@ -17,12 +21,18 @@ const TeaItem = ({ id, imageUrl, price, title }: ITeaItem) => {
             </Link>
             <h3 className="font-bold text-xl text-center mt-3.5">{title}</h3>
             <div className="flex items-center justify-between mt-2">
-                <select name="weight" id="weight" className="w-[160px] h-[40px] border border-[#2EAA76] rounded-md cursor-pointer">
+                <select
+                    name="weight"
+                    id="weight"
+                    className="w-[160px] h-[40px] border border-[#2EAA76] rounded-md cursor-pointer px-4"
+                    value={weight}
+                    onChange={(e) => setWeight(+e.target.value)}>
+                    <option value="50">50 г.</option>
                     <option value="100">100 г.</option>
                     <option value="200">200 г.</option>
                     <option value="300">300 г.</option>
                 </select>
-                <div className="flex flex-1 justify-center font-bold">{price} руб</div>
+                <div className="flex flex-1 justify-center font-bold">{price * weight / 100} руб</div>
             </div>
             <div className="button_item duration-300 group">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">

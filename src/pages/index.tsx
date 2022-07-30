@@ -1,17 +1,47 @@
 import type { NextPage } from 'next'
 import Image from 'next/image'
+import { useEffect } from 'react'
+import Categories from '../components/Categories'
 import Header from '../components/Header'
 import Sort from '../components/Sort'
 import TeaItem from '../components/TeaItem'
+import { useAppDispatch } from '../hooks/useAppDispatch'
+import { useAppSelector } from '../hooks/useAppSelector'
+import { fetchTea } from '../redux/reducers/fetchTea'
 
 const Home: NextPage = () => {
+
+  const dispatch = useAppDispatch()
+  const {items, status} = useAppSelector(state => state.tea)
+  const {activeCategory, activeOrder, activeSearch, activeSortBy} = useAppSelector(state => state.filter)
+
+  useEffect(() => {
+    dispatch(fetchTea({
+      category: activeCategory,
+      order: activeOrder,
+      search: activeSearch,
+      sortBy: activeSortBy
+    }))
+  }, [activeCategory, activeOrder, activeSearch, activeSortBy])
+
   return (
-    <div className='p-10'>
-        <div className='flex justify-between'>
-          <div className='font-bold text-4xl'>Каталог чая</div>
-          <Sort/>
+    <div className='mycontainer py-[43px]'>
+      <div className='flex gap-[100px]'>
+        <Categories />
+
+        <div className='flex-1'>
+          <div className='flex justify-between'>
+            <div className='font-bold text-4xl'>Каталог чая</div>
+            <Sort />
+          </div>
+
+          <div className='grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4'>
+            {status === 'error' && <h2>Error</h2>}
+            {status === 'loading' && <h2>Loading</h2>}
+            {status === 'success' && items.map(item => <TeaItem key={item.id} {...item} />)}
+          </div>
         </div>
-        <TeaItem id='1' price={100} title='some tea' category='green' rating={10} key='1' imageUrl='https://moychay.ru/system/product_ng_fotos/8567/medium/d43f93403e20616dd1844d189670e2cc4713a568/moychay_42294.jpg?1637249762' />
+      </div>
     </div>
   )
 }

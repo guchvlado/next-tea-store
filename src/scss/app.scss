@@ -47,11 +47,6 @@
         @apply bg-white opacity-50 h-6 w-[1px] mx-3;
     }
     .button_item {
-      @apply flex justify-between items-center border border-maingreen rounded-lg px-6 py-3 mt-2 cursor-pointer hover:bg-maingreen ;
-      &:hover {
-        & {
-          color: #fff;
-        }
-      }
+      @apply flex justify-between items-center border border-maingreen rounded-lg px-6 py-3 mt-2 cursor-pointer hover:bg-maingreen hover:text-white active:bg-green-700 active:translate-y-1 ;
     }
 }
