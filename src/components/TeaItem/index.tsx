@@ -28,7 +28,7 @@ const TeaItem = ({ id, imageUrl, price, title, category, rating }: ITeaItem) => 
 
     return (
         <div className="w-full hover:scale-105 transition-transform">
-            <Link href={`/tea/${id}`}>
+            <Link href={`/item/${id}`}>
                 <a>
                     <Image
                         src={imageUrl}
