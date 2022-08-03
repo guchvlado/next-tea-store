@@ -73,8 +73,9 @@ const TeaPage = ({ item }: TeaPageProps) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    const response = await axios.get<ITeaItem[]>('http://localhost:3000/api/teaAPI')
-    const paths = response.data.map(({ id }) => ({
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}`)
+    const data = await response.json() as ITeaItem[]
+    const paths = data.map(({ id }) => ({
         params: { id: id.toString() }
     }))
 
@@ -87,11 +88,18 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async (context) => {
 
     const { id } = context.params!
-    const response = await axios.get<ITeaItem[]>('http://localhost:3000/api/teaAPI/' + id)
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}` + id)
+    const data = await response.json()
+
+    if (!data) {
+        return {
+            notFound: true
+        }
+    }
 
     return {
         props: {
-            item: response.data
+            item: data
         }
     }
 }
