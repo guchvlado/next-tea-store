@@ -21,15 +21,15 @@ export const cartSlice = createSlice({
             else {
                 state.items.push(action.payload)
             }
-            // localStorage.setItem('cart', JSON.stringify(state.items))
+            localStorage.setItem('cart', JSON.stringify(state.items))
         },
         deleteCartItem: (state, action: PayloadAction<string>) => {
             state.items = state.items.filter(item => item.id !== action.payload)
-            // localStorage.setItem('cart', JSON.stringify(state.items))
+            localStorage.setItem('cart', JSON.stringify(state.items))
         },
         clearCart: state => {
             state.items = []
-            // localStorage.setItem('cart', JSON.stringify(state.items))
+            localStorage.setItem('cart', JSON.stringify(state.items))
         },
         decreaseItemQuantity: (state, action: PayloadAction<ICartItem>) => {
             const cartItem = state.items.find(item => item.id === action.payload.id)
@@ -40,11 +40,11 @@ export const cartSlice = createSlice({
             else {
                 state.items = state.items.filter(item => item.id !== action.payload.id)
             }
-            // localStorage.setItem('cart', JSON.stringify(state.items))
+            localStorage.setItem('cart', JSON.stringify(state.items))
         },
         setCartItems: (state, action: PayloadAction<ICartItem[]>) => {
             state.items = action.payload
-            // localStorage.setItem('cart', JSON.stringify(state.items))
+            localStorage.setItem('cart', JSON.stringify(state.items))
         }
     }
 })

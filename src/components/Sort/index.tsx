@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { useAppDispatch } from "../../hooks/useAppDispatch"
 import { useAppSelector } from "../../hooks/useAppSelector"
 import { setActiveSort } from "../../redux/reducers/filterSlice"
@@ -12,12 +12,12 @@ const sortList: ISortItem[] = [
     {name: 'По наименованию z-a', sortBy: 'title', order: 'inc'}
 ]
 
-const Sort = () => {
+const Sort = React.memo(() => {
 
     const dispatch = useAppDispatch()
 
     const [isOpen, setIsOpen] = useState(false)
-    const {activeSort} = useAppSelector(state => state.filter)
+    const activeSort = useAppSelector(state => state.filter.activeSort)
 
     const sortRef = useRef<HTMLDivElement>(null)
 
@@ -71,6 +71,8 @@ const Sort = () => {
             </div>}
         </div>
     )
-}
+})
+
+Sort.displayName = 'Sort'
 
 export default Sort

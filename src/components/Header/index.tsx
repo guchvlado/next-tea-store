@@ -31,7 +31,7 @@ const Header = () => {
                 </Link>
 
                 {router.pathname === '/' && <Search/>}
-
+                
                 <CartButton/>
             </div>
         </header>

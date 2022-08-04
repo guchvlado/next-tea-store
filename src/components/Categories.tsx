@@ -1,15 +1,15 @@
-import { useState } from "react"
+import React, { useState } from "react"
 import { useAppDispatch } from "../hooks/useAppDispatch"
 import { useAppSelector } from "../hooks/useAppSelector"
 import { setActiveCategory } from "../redux/reducers/filterSlice"
 
 const categories = ['Все', 'Красный', 'Зеленый', 'Улун', 'Пуэр', 'Травяной']
 
-const Categories = () => {
+const Categories = React.memo(() => {
     
     const dispatch = useAppDispatch()
 
-    const {activeCategory} = useAppSelector(state => state.filter)
+    const activeCategory = useAppSelector(state => state.filter.activeCategory)
 
     const onChangeCategory = (i: number) => {
         dispatch(setActiveCategory(i))
@@ -28,6 +28,8 @@ const Categories = () => {
             </ul>
         </div>
     )
-}
+})
+
+Categories.displayName = 'Categories'
 
 export default Categories

@@ -8,6 +8,8 @@ import { useAppSelector } from '../../hooks/useAppSelector';
 import { addCartItem } from '../../redux/reducers/cartSlice';
 import { ITeaItem } from '../../types/ITeaItem';
 
+import { teaData } from '../api/data/teaData'
+
 interface TeaPageProps {
     item: ITeaItem;
 }
@@ -73,8 +75,9 @@ const TeaPage = ({ item }: TeaPageProps) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}`)
-    const data = await response.json() as ITeaItem[]
+    // const response = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}`)
+    // const data = await response.json() as ITeaItem[]
+    const data = teaData
     const paths = data.map(({ id }) => ({
         params: { id: id.toString() }
     }))
@@ -88,8 +91,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async (context) => {
 
     const { id } = context.params!
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}` + id)
-    const data = await response.json()
+    // const response = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}` + id)
+    // const data = await response.json()
+
+    const data = teaData.find(item => item.id === id)
 
     if (!data) {
         return {

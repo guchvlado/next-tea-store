@@ -12,12 +12,12 @@ const MainLayOut = ({children}: MainLayOutProps) => {
 
     const dispatch = useAppDispatch()
 
-    // useEffect(() => {
-    //   dispatch(setCartItems(getCartFromLS()))
-    // }, [])
+    useEffect(() => {
+      dispatch(setCartItems(getCartFromLS()))
+    }, [])
 
     return (
-        <div className='bg-white rounded-lg h-full mt-[50px] mx-auto max-w-[1400px] w-11/12'>
+        <div className='bg-white rounded-lg h-full my-[50px] mx-auto max-w-[1400px] w-11/12'>
             <Header/>
             <main>
                 {children}
