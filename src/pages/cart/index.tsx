@@ -28,7 +28,7 @@ const Cart: NextPage = () => {
     <>
       {items.length > 0 ? 
       <div className='mycontainer'>
-      <div className="w-[820px] mx-auto py-24">
+      <div className="w-full lg:w-[820px] mx-auto py-24">
         <div className="flex justify-between items-center">
           <h2 className="flex items-center text-3xl gap-3">
             <svg
@@ -58,7 +58,7 @@ const Cart: NextPage = () => {
                 strokeLinejoin="round"></path>
             </svg>
             Корзина</h2>
-          <div onClick={onClearCart} className="flex items-center cursor-pointer child:text-gray-300 child:duration-300 child:hover:text-gray-900 group">
+          <div onClick={onClearCart} className="flex items-center ml-8 text-xs md:ml-0 md:text-lg cursor-pointer child:text-gray-300 child:duration-300 child:hover:text-gray-900 group">
             <svg
               width="20"
               height="20"

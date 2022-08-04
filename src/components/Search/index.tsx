@@ -26,7 +26,7 @@ const Search = () => {
     }
 
     return (
-        <div className='flex items-center w-[350px] h-[50px] border border-[rgba(0,0,0,0.1)] rounded-xl gap-3 p-3'>
+        <div className='items-center w-[250px] lg:w-[350px] h-[50px] border border-[rgba(0,0,0,0.1)] rounded-xl gap-3 p-3 hidden md:flex'>
             <svg
                 className='w-5 h-5 opacity-30'
                 enableBackground="new 0 0 32 32"

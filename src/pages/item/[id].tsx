@@ -30,12 +30,13 @@ const TeaPage = ({ item }: TeaPageProps) => {
     }
     
     return (
-        <div className='mycontainer py-24 flex gap-5'>
-            <Image
-                src={item.imageUrl}
-                alt={item.title}
-                width={600}
-                height={400} />
+        <div className='mycontainer py-24 flex flex-col md:flex-row gap-5'>
+                <Image
+                    src={item.imageUrl}
+                    alt={item.title}
+                    width={600}
+                    height={400}
+                    objectFit='cover' />
 
             <div className='flex flex-col gap-5'>
                 <h2>{item.title}</h2>

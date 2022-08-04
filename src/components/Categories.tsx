@@ -17,11 +17,11 @@ const Categories = React.memo(() => {
 
     return (
         <div>
-            <ul className="flex flex-col gap-4">
+            <ul className="flex justify-center flex-wrap md:flex-col gap-4">
                 {categories.map((item, index) => 
                 <li
                 key={index}
-                className={`duration-300 flex justify-center items-center font-bold rounded-full bg-[#F9F9F9] w-[196px] h-[46px] cursor-pointer  
+                className={`duration-300 flex justify-center items-center font-bold rounded-full bg-[#F9F9F9] w-full sm:w-[160px] md:w-[196px] h-[46px] cursor-pointer  
                 ${index === activeCategory ? 'text-white bg-[#282828]' : 'hover:bg-[#e7e7e7]'}`}
                 onClick={() => onChangeCategory(index)}
                 >{item}</li>)}

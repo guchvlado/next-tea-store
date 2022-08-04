@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import Image from 'next/image'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Categories from '../components/Categories'
 import Header from '../components/Header'
 import Sort from '../components/Sort'
@@ -35,16 +35,16 @@ const Home: NextPage = () => {
 
   return (
     <div className='mycontainer py-[43px]'>
-      <div className='flex gap-[100px]'>
+      <div className='flex gap-4 md:gap-[100px] flex-col md:flex-row'>
         <Categories />
 
         <div className='flex-1'>
           <div className='flex justify-between'>
-            <div className='font-bold text-4xl'>Каталог чая</div>
+            <div className='hidden md:block font-bold text-2xl lg:text-4xl'>Каталог чая</div>
             <Sort />
           </div>
 
-          <div className='grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4'>
+          <div className='grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 mt-4'>
             {status === 'error' && <h2>Error</h2>}
             {status === 'loading' && skeletons}
             {status === 'success' && teaItems}

@@ -23,8 +23,8 @@ const CartItem: React.FC<ICartItem> = (props) => {
     }
 
     return (
-        <div className="w-full border-t pt-6 flex items-center">
-            <div className='w-[10%]'>
+        <div className="w-full border-t pt-6 flex items-center justify-between">
+            <div className='hidden md:block w-[10%]'>
                 <Image
                     src={imageUrl}
                     alt="Pizza"
@@ -36,7 +36,7 @@ const CartItem: React.FC<ICartItem> = (props) => {
                 <h3 className='font-bold text-2xl leading-7'>{title}</h3>
                 <span className='text-lg text-gray-500'>{quantity} г.</span>
             </div>
-            <div className="flex items-center gap-4 w-[33%]">
+            <div className="hidden md:flex items-center gap-4 w-[33%]">
                 <div onClick={onRemoveOne} className="button_cartItem">
                     <svg
                         width="10"
@@ -49,7 +49,6 @@ const CartItem: React.FC<ICartItem> = (props) => {
                             fill="#2EAA76"></path>
                     </svg>
                 </div>
-                {/* <b>{2}</b> */}
                 <select
                     name="cartWeight"
                     id="cartWeight"
@@ -77,7 +76,7 @@ const CartItem: React.FC<ICartItem> = (props) => {
                     </svg>
                 </div>
             </div>
-            <div className="w-[13%] flex justify-center items-center">
+            <div className="w-[14%] flex justify-center items-center">
                 <b>{price * quantity / 100} ₽</b>
             </div>
             <div onClick={onRemoveFromCart} className="cart__item-remove">
