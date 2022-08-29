@@ -29,16 +29,18 @@ const Sort = React.memo(() => {
 
     useEffect(() => {
         const handleClickOutside = (e: MouseEvent) => {
-            const _e = e as MouseEvent & {path: Node[]}
-            if (sortRef.current && !_e.path.includes(sortRef.current)) {
-                setIsOpen(false)
+            if (
+                isOpen
+                && sortRef.current
+                && !sortRef.current.contains(e.target as Node)) {
+                    setIsOpen(false)
             }
         }
 
         document.body.addEventListener('click', handleClickOutside)
 
         return () => document.body.removeEventListener('click', handleClickOutside)
-    }, [])
+    }, [isOpen])
 
     return (
         <div ref={sortRef} className="relative">

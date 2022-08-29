@@ -1,19 +1,12 @@
 import type { NextPage } from 'next'
-import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import Categories from '../components/Categories'
-import Header from '../components/Header'
 import Sort from '../components/Sort'
 import TeaItem from '../components/TeaItem'
 import Skeleton from '../components/TeaItem/Skeleton'
 import { useAppDispatch } from '../hooks/useAppDispatch'
 import { useAppSelector } from '../hooks/useAppSelector'
 import { fetchTea } from '../redux/reducers/fetchTea'
-import { ITeaItem } from '../types/ITeaItem'
-
-// interface HomePageProps {
-//   items: ITeaItem[];
-// }
 
 const Home: NextPage = () => {
 
